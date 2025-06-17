@@ -1,0 +1,73 @@
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;赛博泡泡纸&lt;/title&gt;
+    &lt;style&gt;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 114px); /* 4列 */
+            grid-template-rows: repeat(10, 114px);  /* 10行 */
+            gap: 0;
+            width: 456px;   /* 114px × 4列 */
+            height: 1140px; /* 114px × 10行 */
+        }
+        .tile {
+            width: 114px;
+            height: 114px;
+            background-size: 456px 1140px; /* 总图片尺寸 */
+            cursor: pointer;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container" id="imageContainer"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('imageContainer');
+            const cols = 4, rows = 10;
+            const tileSize = 114;
+            
+            // ===================== 替换图床链接 =====================
+            const image1Url = 'https://s21.ax1x.com/2025/06/16/pVEEoe1.jpg'; // 456×1140px
+            const image2Url = 'https://s21.ax1x.com/2025/06/16/pVEMWrD.jpg'; // 相同尺寸
+            // ====================================================
+            
+            // 创建10行×4列网格
+            for (let row = 0; row &lt; rows; row++) {
+                for (let col = 0; col &lt; cols; col++) {
+                    const tile = document.createElement('div');
+                    tile.className = 'tile';
+                    
+                    // 初始显示图一的对应部分
+                    tile.style.backgroundImage = `url('${image1Url}')`;
+                    tile.style.backgroundPosition = `${-col * tileSize}px ${-row * tileSize}px`;
+                    
+                    // 点击切换为图二的对应部分
+                    tile.onclick = function() {
+                        if (!this.dataset.clicked) {
+                            this.style.backgroundImage = `url('${image2Url}')`;
+                            this.dataset.clicked = 'true';
+                        }
+                    };
+                    
+                    container.appendChild(tile);
+                }
+            }
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
